@@ -1,2 +1,2 @@
 # piappl
-Python applications
+Python (3) applications
