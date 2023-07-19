@@ -1,6 +1,6 @@
 # Author: Martin Ouwerkerk
 # Version 1.0 20230628 
-# License: Public Domain
+# License: MIT
 
 import csv
 import array as arr
