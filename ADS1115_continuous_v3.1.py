@@ -1,6 +1,6 @@
-# Author: Martin Ouwerkerk based on Adafruit example
-# Version 3.1 20230628 
-# License: Public Domain
+# Author: Martin Ouwerkerk based on Adafruit AD1x15 example
+# Version 3.2 20230719 
+# License: MIT
 import time
 import matplotlib as mpl
 import matplotlib.pyplot as plt
