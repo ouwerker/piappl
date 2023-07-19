@@ -51,9 +51,14 @@ sense = SenseHat()
 sense.clear()
 pressure = sense.get_pressure()
 
+
+# setting axes limits narrowed to 1 mbar range
+plotrange = input('please enter pressure range of y-axis :\n')
+intplotrange = int(plotrange)
+halfplotrange = intplotrange/2
 intpressure=int(pressure)
-bottom =intpressure
-top=intpressure+1
+bottom =intpressure-halfplotrange
+top=intpressure+halfplotrange
 
 ax.set_ylim(bottom,top)
 
@@ -130,7 +135,7 @@ while (time.time() - start) <= DURATION:
         line_count += 1
         
  
-    print(f'Pressure : {voortgang:.3f} {pressure:.4f} {PRESSUREUNIT}')
+    print(f'Pressure {pressure:.4f} {PRESSUREUNIT} at {voortgang:.3f} seconds after start of data collection')
     ax.scatter(TIMEARRAY,PRESSUREARRAY,marker='.', color='green')
     # Show real time graph during interval
     if REALTIMEGRAPH == 'Y' or REALTIMEGRAPH == 'y': plt.pause(INTERVAL)
