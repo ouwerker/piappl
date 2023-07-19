@@ -1,6 +1,6 @@
-# Author: Martin Ouwerkerk
-# Version 1.1 202306030
-# License: Public Domain
+# Author: Martin Ouwerkerk based on Adafruit circuit python AS7341 example
+# Version 1.2 20230719
+# License: MIT
 
 import time
 from time import sleep
