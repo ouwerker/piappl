@@ -1,5 +1,5 @@
 # Author: Martin Ouwerkerk
-# Version 1.0 20230628 
+# Version 1.1 20230720 
 # License: MIT
 
 import csv
@@ -7,19 +7,31 @@ import array as arr
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
-import os.path
+
+import os
 
 SENSORNAME=input('please enter the name of the sensor :\n')
 
-datafile_path='/home/ouwerker/Data/'
-complete_path=os.path.expanduser(datafile_path)
+datafile_path='/home/ouwerker/Data/'+SENSORNAME
+print(f'Data files for this sensor can be found here: {datafile_path}')
+cwd = os.getcwd()
+print(cwd)
+os.chdir(datafile_path)
+cwdnew = os.getcwd()
+print(cwdnew)
+# complete_path=os.path.expanduser(datafile_path)
 
+from tkinter import Tk
+from tkinter.filedialog import askopenfilename
+Tk().withdraw()
+complete_name = askopenfilename()
 # default name_of_file='ADS1115output_2023-06-28_05'
-part1_of_name=SENSORNAME+'output_'
-part2_of_name='2023-06-28_17'
-parts_of_name=part1_of_name+part2_of_name
+# part1_of_name=SENSORNAME+'output_'
+# part2_of_name='2023-06-28_17'
+# parts_of_name=part1_of_name+part2_of_name
 
-complete_name=os.path.join(complete_path,SENSORNAME,parts_of_name+'.csv')
+# complete_name=os.path.join(complete_path,SENSORNAME,parts_of_name+'.csv')
+
 print(complete_name)
 TIMEARRAY=arr.array('f')
 VOLTAGEARRAY=arr.array('f')
@@ -49,3 +61,6 @@ with open(complete_name, newline='') as csvfile:
 ax.scatter(TIMEARRAY,VOLTAGEARRAY,marker='.', color='green')
 plt.show()
 plt.clf()
+os.chdir(cwd)
+
+
