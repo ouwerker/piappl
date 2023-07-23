@@ -8,24 +8,33 @@ import matplotlib.pyplot as plt
 import numpy as np
 import csv
 
-# set plot parameters
+# Start of sensor specific part
+UNIT = 'volt'
+SENSORNAME = 'ADS1115'
+SENSORMODALITY = 'Voltage'
 
+
+# set plot parameters
 fig, ax=plt.subplots(figsize=(7,4.5))
-ax.set_title('ADS1115')
+ax.set_title(SENSORNAME)
 ax.set_xlabel('time [s]')
-ax.set_ylabel('voltage [V]')
+ax.set_ylabel(SENSORMODALITY)
 # marker_style=dict(markersize=10, markerfacecolor='tab:blue',markeredgecolor='tab:red')
 # Generate data file name and file path
 
 import datetime
 import os.path
-save_path='/home/ouwerker/Data/ADS1115/'
+save_path='/home/ouwerker/Data/'+ SENSORNAME + '/'
 complete_path=os.path.expanduser(save_path)
+if not os.path.exists(complete_path):
+    os.makedirs(complete_path)
+    print("Directory '%s' created successfully" %SENSORNAME)
+
 DATUM=str(datetime.date.today())
 filenr = 1
 filenrstr = str(filenr)
 FILENUMBER='_0'+filenrstr
-name_of_file='ADS1115output_'
+name_of_file=SENSORNAME+'output_'
 name_of_file=name_of_file+DATUM+FILENUMBER
 complete_name=os.path.join(complete_path,name_of_file+'.csv')
 EXISTS=os.path.exists(complete_name)
@@ -36,7 +45,7 @@ while  EXISTS :
         FILENUMBER='_0'+filenrstr
     else :
         FILENUMBER='_'+filenrstr
-    name_of_file='ADS1115output_'
+    name_of_file=SENSORNAME +'output_'
     name_of_file=name_of_file+DATUM+FILENUMBER
     complete_name=os.path.join(complete_path,name_of_file+'.csv')
     EXISTS=os.path.exists(complete_name)
