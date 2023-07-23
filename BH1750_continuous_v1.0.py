@@ -34,6 +34,10 @@ import datetime
 import os.path
 save_path='/home/ouwerker/Data/' + SENSORNAME + '/'
 complete_path=os.path.expanduser(save_path)
+if not os.path.exists(complete_path):
+    os.makedirs(complete_path)
+    print("Directory '%s' created successfully" %SENSORNAME)
+
 DATUM=str(datetime.date.today())
 filenr = 1
 filenrstr = str(filenr)
