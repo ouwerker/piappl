@@ -1,5 +1,5 @@
 # Author: Martin Ouwerkerk
-# Version 1.2 20230723 
+# Version 1.2 20230724 
 # License: MIT
 
 import csv
@@ -9,23 +9,18 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 
-
-
 cwd = os.getcwd()
 print(cwd)
 
-
-SENSORNAME=input('please enter the name of the sensor :\n')
+SENSORNAME=input('Please enter the sensor name (enter for PiSenseHat/Sensormodality):\n')
 
 datafile_path='/home/ouwerker/Data/'+SENSORNAME
 print(f'Data files for this sensor can be found here: {datafile_path}')
-# path = datafile_path
 
 while not os.path.exists(datafile_path):
     SENSORNAME=input('Name not found, please enter a valid sensor name:\n')
     datafile_path='/home/ouwerker/Data/'+SENSORNAME
     
-
 os.chdir(datafile_path)
 cwdnew = os.getcwd()
 print(cwdnew)
@@ -39,7 +34,7 @@ print(complete_name)
 TIMEARRAY=arr.array('f')
 SENSOROUTPUTARRAY=arr.array('f')
 
-fig, ax=plt.subplots(figsize=(7,3.8))
+fig, ax=plt.subplots(figsize=(9,4.5))
 
 line_count = 0
 
@@ -58,11 +53,15 @@ with open(complete_name, newline='') as csvfile:
         if line_count==3:
             fieldnames = row
             
-# set plot parameters
-# uncomment when a time unit is present in the data file
-# ax.set_xlabel(fieldnames[0] + ' [' + headeritems[3] + ']')
-ax.set_xlabel(fieldnames[0])
-ax.set_ylabel(fieldnames[1])
+# set plot parameters, uncomment what is applicable
+# use when a time unit is present in the data file
+ax.set_xlabel(fieldnames[0] + ' [' + headeritems[3] + ']')
+# use when a time unit is lacking in the data file
+# ax.set_xlabel(fieldnames[0])
+# use when a data unit is present in the data file
+ax.set_ylabel(fieldnames[1] + ' [' + headeritems[1] + ']')
+# use when a data unit is lacking in the data file
+# ax.set_ylabel(fieldnames[1])
     
 csvfile.close()
 
@@ -83,6 +82,11 @@ with open(complete_name, newline='') as csvfile:
 ax.scatter(TIMEARRAY,SENSOROUTPUTARRAY,marker='.', color='green')
 plt.show()
 plt.clf()
+
+# Wrapping up
+csvfile.close()
 os.chdir(cwd)
+
+
 
 
