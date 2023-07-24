@@ -17,11 +17,11 @@ SENSORMODALITYLIST = ['CO2','TVOC']
 TIMEUNIT = 's'
 
 # set plot parameters
-PLOTTITLE = SENSORNAME + ' ' + UNITLIST[1] + ' sensor'
+PLOTTITLE = SENSORNAME + ' ' + SENSORMODALITYLIST[0] + ' and ' + SENSORMODALITYLIST[1] + ' sensor'
 fig, ax=plt.subplots(figsize=(7,4.5))
 ax.set_title(PLOTTITLE)
 ax.set_xlabel('time ['+ TIMEUNIT + ']')
-PLOTYLABEL = SENSORMODALITYLIST[1] + ' [' + UNITLIST[1] + ']'
+PLOTYLABEL = SENSORMODALITYLIST[0] + ' [' + UNITLIST[0] + '] and ' + SENSORMODALITYLIST[1] + ' [' + UNITLIST[1] + ']'
 ax.set_ylabel(PLOTYLABEL)
 
 # Generate data file name and file path
@@ -72,7 +72,7 @@ sgp30.set_iaq_baseline(0x8973, 0x8AAE)
 # Estimate! Best to measure T and relHum% and use these values
 sgp30.set_iaq_relative_humidity(celsius=22.1, relative_humidity=44)
 
-SENSOROUTPUTCO2 = sgp.eCO2
+SENSOROUTPUTCO2 = sgp30.eCO2
 SENSOROUTPUTTVOC = sgp30.TVOC
 BASELINECO2 = sgp30.baseline_eCO2
 BASELINETVOC = sgp30.baseline_TVOC
@@ -110,10 +110,10 @@ with open(complete_name,'w', newline='') as csvfile:
     line_count += 1
 
 with open(complete_name,'a', newline='') as csvfile:
-    fieldnames = ['sensorname', 'unit', 'duration', 'timeunit']
+    fieldnames = ['sensorname', 'unitCO2', 'unitTVOC', 'duration', 'timeunit']
     line_writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     line_writer.writeheader()
-    line_writer.writerow({'sensorname': SENSORNAME, 'units': UNITLIST, 'duration': DURATION, 'timeunit': TIMEUNIT})
+    line_writer.writerow({'sensorname': SENSORNAME, 'unitCO2': UNITLIST[0], 'unitTVOC': UNITLIST[1], 'duration': DURATION, 'timeunit': TIMEUNIT})
     line_count += 1
 
 
@@ -135,7 +135,7 @@ with open(complete_name,'a', newline='') as csvfile:
 
 while (time.time() - start) <= DURATION:
     # Read the SGP30 output
-    SENSOROUTPUTCO2 = sgp.eCO2
+    SENSOROUTPUTCO2 = sgp30.eCO2
     SENSOROUTPUTTVOC = sgp30.TVOC
     BASELINECO2 = sgp30.baseline_eCO2
     BASELINETVOC = sgp30.baseline_TVOC
@@ -146,14 +146,16 @@ while (time.time() - start) <= DURATION:
  
     # Write sensor output to csv file
     with open(complete_name,'a', newline='') as csvfile:
-        fieldnames = ['time', UNIT]
+        fieldnames = ['time', SENSORMODALITYLIST[0], SENSORMODALITYLIST[1]]
         line_writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        line_writer.writerow({'time': voortgang, UNIT: value})
+        line_writer.writerow({'time': voortgang, SENSORMODALITYLIST[0]: SENSOROUTPUTCO2,  SENSORMODALITYLIST[1]: SENSOROUTPUTTVOC})
         line_count += 1
 
-    print(f' {voortgang:.3f} {TIMEUNIT}  {SENSORMODALITYLIST[1]} {SENSOROUTPUTCO2:4d} {UNITLIST[1]} and {SENSORMODALITYLIST[1]} {SENSOROUTPUTTVOC:4d} {UNITLIST[2]}')
-    ax.scatter(TIMEARRAY,SENSOROUTPUTCO2ARRAY,marker='.', color='blue')
-    ax.scatter(TIMEARRAY,SENSOROUTPUTTVOCARRAY,marker='.', color='green')
+    print(f' {voortgang:.3f} {TIMEUNIT}  {SENSORMODALITYLIST[1]} {SENSOROUTPUTCO2:4d} {UNITLIST[0]} and {SENSORMODALITYLIST[1]} {SENSOROUTPUTTVOC:4d} {UNITLIST[1]}')
+    line1 = ax.scatter(TIMEARRAY,SENSOROUTPUTCO2ARRAY,marker='.', color='blue')
+    line2 = ax.scatter(TIMEARRAY,SENSOROUTPUTTVOCARRAY,marker='.', color='green')
+    ax.legend([line1, line2], ['ppm CO2', 'ppb VOC'])
+ 
     # Show real time graph during interval
     if REALTIMEGRAPH == 'Y' or REALTIMEGRAPH == 'y': plt.pause(INTERVAL)
     else : time.sleep(INTERVAL)
