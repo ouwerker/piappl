@@ -1,5 +1,5 @@
 # Author: Martin Ouwerkerk based on Raspberry Pi Sense Hat example
-# Version 3.2 20230724 
+# Version 3.2 20230726
 # License: MIT
 
 import time
@@ -59,10 +59,12 @@ ax.set_ylabel(PLOTYLABEL)
 # Program the sensor
 from sense_hat import SenseHat
 sense = SenseHat()
-value = sense.get_temperature()
+# calibrate the sensor with a reliable sensor and enter the correction below
+temperaturecorrection = -1.4
+value = sense.get_temperature() + temperaturecorrection
 # get a second reading tot make sure it is not a zero reading (PiSenseHat bug..)
 time.sleep(1)
-value = sense.get_temperature()
+value = sense.get_temperature() + temperaturecorrection
 
 # setting axes limits narrowed to a range
 plotrange = input('please enter desired range of y-axis :\n')
@@ -130,7 +132,7 @@ with open(complete_name,'a', newline='') as csvfile:
 
 while (time.time() - start) <= DURATION:
     # Read the sensor value
-    value = sense.get_temperature()
+    value = sense.get_temperature() + temperaturecorrection
 
     SENSOROUTPUTARRAY.extend([value])
     voortgang=time.time()-start

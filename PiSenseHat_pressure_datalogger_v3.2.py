@@ -1,5 +1,5 @@
 # Author: Martin Ouwerkerk based on Raspberry Pi Sense Hat example
-# Version 3.2 20230724 
+# Version 3.2 20230726 
 # License: MIT
 
 import time
