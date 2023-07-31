@@ -5,7 +5,9 @@
 import time
 from time import sleep
 import matplotlib as mpl
+from mpl_toolkits.mplot3d import axes3d
 import matplotlib.pyplot as plt
+
 import numpy as np
 import csv
 import datetime
@@ -64,6 +66,7 @@ WAVELENGTHARRAY=arr.array('d')
 WAVELENGTHARRAY=([415,445,480,515,555,590,630,680])
 INTENSITYARRAY=arr.array('f')
 
+
 # Choose measurement interval
 INTERVAL = input('please enter sampling interval in milliseconds (1300 or more) :\n')
 INTERVAL=float(INTERVAL)
@@ -121,6 +124,7 @@ while (time.time() - start) <= DURATION:
     voortgang=time.time()-start
     TIMEARRAY.extend([voortgang])
     INTENSITYARRAY=([sensor.channel_415nm,sensor.channel_445nm,sensor.channel_480nm,sensor.channel_515nm,sensor.channel_555nm,sensor.channel_590nm,sensor.channel_630nm,sensor.channel_680nm])
+    
     ax.plot(WAVELENGTHARRAY,INTENSITYARRAY)
     print(f'elapsed time since start [s]: {voortgang:.3f}')
     
