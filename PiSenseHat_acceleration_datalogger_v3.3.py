@@ -1,5 +1,5 @@
 # Author: Martin Ouwerkerk based on Raspberry Pi Sense Hat example
-# Version 3.3 20230724
+# Version 3.3 20230801
 # License: MIT
 
 import time
@@ -59,12 +59,13 @@ from sense_hat import SenseHat
 sense = SenseHat()
 sense.clear()
 
-acccorrection=0.0
+xacccorrection=0.0
+yacccorrection=0.0
+zacccorrection=0.0
 acceleration = sense.get_accelerometer_raw()
-
-xacc = acceleration['x']-acccorrection
-yacc = acceleration['y']-acccorrection
-zacc = acceleration['z']-acccorrection
+xacc = acceleration['x'] + xacccorrection
+yacc = acceleration['y'] + yacccorrection
+zacc = acceleration['z'] + zacccorrection
 
 # setting axes limits
 print('Sensor data is shown in a graph')
