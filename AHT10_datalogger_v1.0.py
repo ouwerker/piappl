@@ -80,7 +80,7 @@ REALTIMEGRAPH = input('real time graph? Y/N  ')
 if REALTIMEGRAPH == 'Y' or REALTIMEGRAPH == 'y':
     GRAPHSENSOR = input ('Temperature or relative humidity graph? T/H : ')
     while GRAPHSENSOR != 'T' and GRAPHSENSOR != 'H':
-        GRAPHSENSOR = input ('invalid entry, please enter T for temperature of H for humidity : ')
+        GRAPHSENSOR = input ('invalid entry, please enter T for temperature or H for humidity : ')
 
 # set plot parameters
 PLOTTITLE = SENSORNAME + ' ' + SENSORMODALITY + ' sensor'
