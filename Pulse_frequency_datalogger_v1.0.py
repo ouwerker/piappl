@@ -1,4 +1,4 @@
-# Author: Martin Ouwerkerk based on Adafruit_CircuitPython_AHTx0 driver
+# Author: Martin Ouwerkerk
 # Version 1.0 20250304
 # License: MIT
 
