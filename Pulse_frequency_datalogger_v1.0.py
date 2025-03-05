@@ -77,7 +77,6 @@ ax.set_xlabel('time ['+ TIMEUNIT + ']')
 PLOTYLABEL = 'Pulse frequency [' + FREQUNIT + ']'
 ax.set_ylabel(PLOTYLABEL)
 
-
 # Write settings to csv file
 line_count = 0
 from datetime import datetime
@@ -135,8 +134,6 @@ while (time.time() - start) <= DURATION:
     print(f'Seconds since start {voortgang:.3f} sensor {SENSORNAME} reading {FREQUENCY:.3f} {FREQUNIT}')
     
     ax.scatter(TIMEARRAY,FREQARRAY,marker='.', color='green')
-    
-    print('tot hier')
     
     if REALTIMEGRAPH == 'Y' or REALTIMEGRAPH == 'y': plt.pause(INTERVAL)
     else : time.sleep(INTERVAL)
