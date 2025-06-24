@@ -2,8 +2,9 @@
 # Version 1.0 20250304
 # License: MIT
 
-# !!!!!  prior to running this program run: sudo pigpiod                   !!!!!
-# !!!!!  prior to running this program run: sudo apt install python3-pyqt6 !!!!!
+# !!!!!  prior to running this program run: sudo pigpiod
+# !!!!!  prior to running this program run: sudo apt install python3-pyqt6
+# !!!!!  prior to running this program run: sudo apt install python3-matplotlib
 
 import time
 import pigpio
@@ -16,11 +17,12 @@ import csv
 FREQUNIT = 'Hz'
 SENSORNAME = 'Egely Wheel'
 SENSORMODALITY = 'pulse frequency'
+RISING_EDGE = 0
 
 # Connect the red wire of the Egely Wheel to GPIO 4 (pin7) and black to GND (pin6)
 GPIO = 4
-pi= pigpio.pi() 
-cb = pi.callback(GPIO)
+pi= pigpio.pi('soft',8888) 
+cb = pi.callback(GPIO,edge=RISING_EDGE,func=None)
     
 # specify timeunit
 TIMEUNIT = 's'
@@ -76,6 +78,7 @@ ax.set_title(PLOTTITLE)
 ax.set_xlabel('time ['+ TIMEUNIT + ']')
 PLOTYLABEL = 'Pulse frequency [' + FREQUNIT + ']'
 ax.set_ylabel(PLOTYLABEL)
+
 
 # Write settings to csv file
 line_count = 0
@@ -134,6 +137,8 @@ while (time.time() - start) <= DURATION:
     print(f'Seconds since start {voortgang:.3f} sensor {SENSORNAME} reading {FREQUENCY:.3f} {FREQUNIT}')
     
     ax.scatter(TIMEARRAY,FREQARRAY,marker='.', color='green')
+    
+    print('tot hier')
     
     if REALTIMEGRAPH == 'Y' or REALTIMEGRAPH == 'y': plt.pause(INTERVAL)
     else : time.sleep(INTERVAL)
